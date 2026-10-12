@@ -194,7 +194,7 @@ int main()
 
 
 
-	/*Student student;
+	/*Student student
 
 	student.Initialization();
 	student.Print();
