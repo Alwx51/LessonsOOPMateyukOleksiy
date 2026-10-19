@@ -12,8 +12,13 @@ class Human
     string name;
     int age;
     float weight;
-public:
     static int count_humans;
+public:
+    static int getCount()
+    {
+        
+        return count_humans;
+    }
     Human() :name("no name"), age(0), weight(0) { count_humans++; }
     Human(string name):Human()
     {
@@ -48,21 +53,25 @@ public:
 int Human::count_humans = 0;
 int main()
 { 
+    cout << "Count humans: " << Human::count_humans << endl;
+    Human::getCount();
+
+
     Human h1;
     h1.Print();
-    cout << "Count humans: " << Human::count_humans<<endl;
+    cout << "Count humans: " << h1.getCount() << endl;
 
     Human h2("Oleg");
     h2.Print();
-    cout << "Count humans: " << h2.count_humans << endl;
+    cout << "Count humans: " << h2.getCount()<< endl;
 
     Human h3("Vova", 17);
     h3.Print();
-    cout << "Count humans: " << h3.count_humans << endl;
+    cout << "Count humans: " << h3.getCount() << endl;
 
     Human h4("Mykola",54,234);
     h4.Print();
-    cout << "Count humans: " << h4.count_humans << endl;
+    cout << "Count humans: " << h4.getCount() << endl;
 
 
 
