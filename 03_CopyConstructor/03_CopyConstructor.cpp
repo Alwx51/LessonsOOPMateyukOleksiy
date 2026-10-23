@@ -1,283 +1,467 @@
 #include <iostream>
-
 using namespace std;
 
-struct Point {
+class Point
+{
     int x;
     int y;
-};
+public:
+    Point()
+    {
+        x = y = 0;
+    }
+    explicit Point(int value)
+    {
+        this->x = value;
+        this->y = value;
+    }
+    Point(int x, int y)
+    {
+        this->x = x;
+        this->y = y;
+    }
+    void Print()const
+    {
+        cout << "X : " << x << " . Y : " << y << endl;
+    }
+    Point Plus(const Point& other)const
+    {
+        Point res(this->x + other.x, this->y + other.y);
+        return res;
+    }
+    Point Minus(const Point& other)const
+    {
+        Point res(this->x - other.x, this->y - other.y);
+        return res;
+    }
+    //Overload operators
+    //void operator [symbol operator]() 
 
-class Student
+#pragma region Математичні оператори
+    Point operator +(const Point& other)const
+    {
+        Point res(this->x + other.x, this->y + other.y);
+        return res;
+    }
+    Point operator -(const Point& other)const
+    {
+        Point res(this->x - other.x, this->y - other.y);
+        return res;
+    }
+    Point operator *(const Point& other)const
+    {
+        Point res(this->x * other.x, this->y * other.y);
+        return res;
+    }
+    Point operator /(const Point& other)const
+    {
+        Point res(this->x / other.x, this->y / other.y);
+        return res;
+    }
+#pragma endregion
+#pragma region Binary Operators
+    Point operator +=(const Point& other)
+    {
+        this->x += other.x;
+        this->y += other.y;
+        return *this;
+    }
+
+    Point operator = (const Point& other)
+    {
+        this->x = other.x;
+        this->y = other.y;
+        return *this;
+    }
+#pragma endregion
+
+
+#pragma region Uno Operators
+    Point operator -()const
+    {
+        //return Point(this->x*  -1, this->y* -1);
+        return Point(-x, -y);
+    }
+
+    Point operator--()//prefix form decrement
+    {
+        --this->x;
+        --this->y;
+        return *this;
+    }
+    Point operator++(int k)//postfix form increment
+    {
+        this->x++;
+        this->y++;
+        return *this;
+    }
+    Point operator--(int)//postfix form decrement
+    {
+        this->x--;
+        this->y--;
+        return *this;
+    }
+
+
+#pragma endregion
+
+#pragma region Logic operators  < > <= >=  !  == !=
+    bool operator > (const Point& other)const
+    {
+        /*if ((this->x + this->y) > (other.x + other.y))
+            return true;
+        else
+            return false;*/
+        return  ((this->x + this->y) > (other.x + other.y));
+    }
+    bool operator < (const Point& other)const
+    {
+        return  ((this->x + this->y) < (other.x + other.y));
+    }
+    bool operator >= (const Point& other)const
+    {
+        return  ((this->x + this->y) >= (other.x + other.y));
+    }
+
+    bool operator == (const Point& other)const
+    {
+        return  ((this->x == other.x) && (this->y == other.y));
+    }
+    bool operator != (const Point& other)const
+    {
+        //return  ((this->x != other.x) || (this->y != other.y));
+
+        return !(*this == other);
+    }
+
+#pragma endregion
+    int getX()const { return x; }
+    int getY()const { return y; }
+    void setX(int newX) { this->x = newX; }
+    void setY(int newY) { this->y = newY; }
+    //friend function
+    friend Point operator++(Point& point);
+    friend ostream& operator << (ostream& out, const Point& point);
+    friend istream& operator >>(istream& in, Point& point);
+};
+//global function
+bool operator <= (const Point& left, const Point& right)
 {
+    return  ((left.getX() + left.getY()) <= (right.getX() + right.getY()));
+}
+Point operator++(Point& point)//prefix form increment
+{
+    point.x++;
+    point.y++;
+    return point;
+}
+//Point operator++(Point &point)//prefix form increment
+//{
+//    point.setX(point.getX() + 1);
+//    point.setY(point.getY() + 1);
+//    return point;
+//}
+ostream& operator << (ostream& out, const Point& point)
+{
+    out << "X [" << point.x << "]" << "  Y[" << point.y << "]";
+    return out;
+}
+istream& operator >>(istream& in, Point& point)
+{
+    in >> point.x;
+    in >> point.y;
+    return in;
+}
+
+void Clear() { system("cls"); }
+
+class Book {
+    string author;
     string name;
-    int age;
-    int* marks;
-    int countMarks;
+    string publish;
+    int year;
+    int pages;
+
 public:
-    Student()
-    {
-        this->name = "no name";
-        this->age = 0;
-        this->marks = nullptr;
-        this->countMarks = 0;
+    Book() {
+        this->author = "No author";
+        this->name = "No name";
+        this->publish = "No publisher";
+        this->year = 0;
+        this->pages = 0;
     }
-    Student(string name,int age)
-    {
+    Book(string author, string name, string publish, int year, int pages) {
+        this->author = author;
         this->name = name;
-        this->age = age;
-        this->marks = nullptr;
-        this->countMarks = 0;
+        this->publish = publish;
+        this->year = year;
+        this->pages = pages;
     }
-    Student(const Student& other)
-    {
+    Book(const Book& other) {
+        this->author = other.author;
         this->name = other.name;
-        this->age = other.age;
-        this->marks = other.marks;
-        this->countMarks = other.countMarks;
-        this->marks = new int[countMarks];
-        for (int i = 0; i < countMarks; i++)
-        {
-            this->marks[i] = other.marks[i];
-        }
+        this->publish = other.publish;
+        this->year = other.year;
+        this->pages = other.pages;
     }
-    void Print()
-    {
-        cout << "Name: " << name << endl;
-        cout << "Age: " << age << endl;
-        cout << "Count marks: " << countMarks << endl;
-        cout << "Marks: ";
-        for (int i = 0; i < countMarks; i++)
-        {
-            cout << marks[i] << " ";
-        }
-        cout << endl;
+    explicit Book(int year) {
+        this->author = "No author";
+        this->name = "No name";
+        this->publish = "No publisher";
+        this->year = year;
+        this->pages = 0;
     }
-    void AddMark(int mark)
-    {
-        int* temp = new int[countMarks + 1];
-        for (int i = 0; i <countMarks; i++)
-        {
-            temp[i] = marks[i];
-        }
-        temp[countMarks] = mark;
-        
-    }
-    void Delete()
-    {
-        if (marks != nullptr)
-        {
-            delete[]marks;
-        }
-    }
-    ~Student()
-    {
-        Delete();
-    }
-};
 
-class Array
+    void Print()const {
+        cout << "Author: " << author << '\n';
+        cout << "Name: " << name << '\n';
+        cout << "Publish: " << publish << '\n';
+        cout << "Year: " << year << '\n';
+        cout << "Pages: " << pages << '\n';
+    }
+    string getAuthor()const {
+        return author;
+    }
+    string getPublis()const {
+        return publish;
+    }
+    int getYear()const {
+        return year;
+    }
+    friend ostream& operator << (ostream& out, const Book& book);
+    void setPages(int p) { this->pages += p; }
+};
+ostream& operator << (ostream& out, const Book& book)
 {
-    long* arr;
-    int size;
+    out << book.author << " " << book.name << "pages " << book.pages << endl;
+    return out;
+}
+class Library {
+    Book* books;
+    int countBooks;
+
 public:
-    Array()
-    {
-        arr = nullptr;
-        size = 0;
+    Library() {
+        books = nullptr;
+        countBooks = 0;
     }
-    Array(int size)
-    {
-        this->size = size;
-        arr = new long[size] {};
+    ~Library() {
+        if (countBooks != 0) delete[] books;
     }
-    Array(const Array& other)
+    Book getBook(int index)
     {
-        this->size = other.size;
-        this->arr = new long[size];
-        for (int i = 0; i < size; i++)
+        if (index >= 0 && index < countBooks)
+            return books[index];
+    }
+    Book operator[](int index)
+    {
+        if (index >= 0 && index < countBooks)
+            return books[index];
+    }
+    void ChangePages(int countP) {
+
+        for (int i = 0; i < countBooks; i++)
         {
-            this->arr[i] = other.arr[i];
+            books[i].setPages(countP);
         }
     }
+    void operator()(int countP) {
 
-        
-    void Print()
-    {
-        for (int i = 0; i < size; i++)
+        for (int i = 0; i < countBooks; i++)
         {
-            cout << arr[i] << " ";
+            books[i].setPages(countP);
         }
     }
+    void operator()(int countP, string name) {
 
-    void FillRandom()
-    {
-        for (int i = 0; i < size; i++)
+        for (int i = 0; i < countBooks; i++)
         {
-            arr[i] = rand() % 100;
+            if (books[i].getAuthor() == name)
+                books[i].setPages(countP);
         }
     }
-
-    void InitArr()
-    {
-        for (int i = 0; i < size; i++)
-        {
-            cout << "Enter " << i << " number: ";cin >> arr[i];
-
-                
-                
+    void PrintAll() {
+        for (int i = 0; i < countBooks; i++) {
+            books[i].Print();
+            cout << '\n';
         }
     }
-    void AddElement(int arr1)
-    {
-        long* temp = new long[size + 1];
-        for (int i = 0; i < size; i++)
-        {
-            temp[i] = arr[i];
-        }
-        temp[size] = arr1;
-        delete[]arr;
-        size++;
-        arr = temp;
+    void PrintAuthor(string author)const {
+        for (int i = 0; i < countBooks; i++)
+            if (books[i].getAuthor() == author) books[i].Print();
     }
-    void DeleteElement(int index)
-    {
-        if (index < 0 || index >= size)  
-            return;
-        long* temp = new long[size - 1];
-        for (int i = 0; i < index; i++)
-        {
-            temp[i] = arr[i];
-        }
-        for (int i = index; i < size-1; i++)
-        {
-            temp[i] = arr[i + 1];
-        }
-        delete[]arr;
-        arr = temp;
-        size--;
-        
+    void PrintPublish(string publish)const {
+        for (int i = 0; i < countBooks; i++)
+            if (books[i].getPublis() == publish) books[i].Print();
     }
-
-    void BubbleSort()
-    {
-        int temp;
-        for (int i = 0; i < size; i++)
-        {
-            for (int j = size - 1; j > i; j--)
-            {
-                if (arr[j - 1] > arr[j])
-                {
-                    temp = arr[j - 1];
-                    arr[j - 1] = arr[j];
-                    arr[j] = temp;
-
-                }
-            }
-        }
+    void PrintYear(int year)const {
+        for (int i = 0; i < countBooks; i++)
+            if (books[i].getYear() > year) books[i].Print();
     }
-    void BubbleSort1()
-    {
-        int temp;
-        for (int i = 0; i < size; i++)
-        {
-            for (int j = size - 1; j > i; j--)
-            {
-                if (arr[j - 1] < arr[j])
-                {
-                    temp = arr[j - 1];
-                    arr[j - 1] = arr[j];
-                    arr[j] = temp;
+    void addBook(Book book) {
+        Book* temp = new Book[countBooks + 1];
 
-                }
-            }
+        for (int i = 0; i < countBooks; i++) {
+            temp[i] = books[i];
         }
-    }
 
-    long FindMin()
-    {
-        long min = arr[0];
+        temp[countBooks] = book;
 
-        for (int i = 1; i < size; i++)
-        {
-            if (arr[i]<min)
-            {
-                min = arr[i];   
-            }
-        }
-        return min;
-    }
-    long FindMax()
-    {
-        long max = arr[0];
-
-        for (int i = 1; i < size; i++)
-        {
-            if (arr[i]>max)
-            {
-                max = arr[i];   
-            }
-        }
-        return max;
-    }
-
-    ~Array()
-    {
-        delete[]arr;
+        delete[] books;
+        books = temp;
+        countBooks++;
     }
 };
-
 int main()
 {
-    Array arr(15);
-    arr.Print();
-    cout << endl;
-    arr.FillRandom();
-    arr.Print();
-    cout << endl;
-    arr.InitArr();
-    arr.Print();
-    cout << endl;
-    arr.AddElement(90);
-    arr.Print();
-    cout << endl;
-    arr.DeleteElement(2);
-    arr.Print();
-    cout << endl;
-    arr.BubbleSort();
-    arr.Print();
-    cout << endl;
-    arr.BubbleSort1();
-    arr.Print();
-    cout << endl;
-    cout << "Min: "<<arr.FindMin() << endl;
-    cout << "Max: "<<arr.FindMax() << endl;
-    Student st;
-    st.Print();
+#pragma region Books
 
 
 
-    //Student student("Ivan", 18);
-    //student.Print();
-    //student.AddMark(12);
-    //student.AddMark(7);
-    //student.AddMark(9);
-    //student.AddMark(4);
-    //student.AddMark(10);
-    //student.Print();
+    Library lib;
+    lib.addBook(Book("Author1", "Book1", "Publisher1", 1000, 100));
+    lib.addBook(Book("Author2", "Book2", "Publisher2", 2000, 200));
+    lib.addBook(Book("Author3", "Book3", "Publisher3", 3000, 300));
+    lib.addBook(Book("Author4", "Book4", "Publisher4", 4000, 400));
+    lib.addBook(Book("Author5", "Book5", "Publisher5", 5000, 500));
+    lib.addBook(Book("Author6", "Book6", "Publisher6", 6000, 600));
 
-    //Student copy = Student(student);
+    cout << "All books:\n\n";
+    // lib.PrintAll();
+#pragma endregion
+    Book search_book1 = lib.getBook(0);
+    Book search_book2 = lib.getBook(0);
+    //search_book1 + search_book2;
+    cout << search_book1;
+    cout << lib[0] << endl;
+    cin.get();
+    Clear();
+    lib.PrintAll();
+    lib.ChangePages(100);
+    lib.PrintAll();
+    lib(500);
+    lib.PrintAll();
+    lib(1000, "Author6");
+    lib.PrintAll();
 
-    //cout << "Original " << endl;
-    //student.Print();
-    //cout << "Copy" << endl;
-    //copy.Print();
 
-    //Point point{ 15,25 };
-    //int number = 2;//ініціалізація з копіюванням
-    //int value(2);//пряма ініціалізація
-    //int size{33};//уніфікована ініціалізація
 
-    //const float goodTemp{ 36.6 };
-    //int marks[3]{ 1,4,7 };
-    //int matrix[2][2]{ {1,2},{3,5} };
-}
+    //5555  
+    //int hours =  5555/3600  = 1
+    // int minute = 5555/60%60 = 32
+    // int seconds = 
+    //+ - * / < > <= >= == !=  = +=  -= 
+    //uno (-5)  (+5)  ++ --
+    /*int a = 5, b = 4, c = 88;
+    a = 100;
+    a = b = c;//<------------------
+    cout << a + b << endl;
+    cout << a << endl;
+    cout << b << endl;
+    a += b;
+    cout << a << endl;
+    cout << b << endl;
+
+    cout << a - b << endl;
+    cout << a * b << endl;
+
+    Point p1(5, 3);
+    Point p2(7, 8);
+
+    //ostream cout;
+    //istream cin;
+    cout << p1<< endl;
+    cout << p2 << endl;
+   // p1.Print();
+    cout << "Enter point x and y : ";
+    cin >> p1;
+    cout << p1;
+
+
+
+    /*Lessons 2*/
+    /*p1.Print();
+    ++p1;
+    p1.Print();
+    --p1;
+    p1.Print();
+
+    p1++;
+    p1.Print();
+    p1--;
+    p1.Print();
+    if (p1 <= p2)
+       cout << "p1 <= p2" << endl;
+   else
+       cout << "p1 >= p2" << endl;
+
+
+
+
+
+       */
+       /*
+       * Lesson 1
+       Point res = p1 + p2;
+         res = p1 - p2;
+         res = p1 * p2;*/
+
+         //Point res = p1.Plus(p2);
+         //cout << "Point 1 : "; p1.Print();
+         //cout << "Point 2 : "; p2.Print();
+         //cout << "Res : "; res.Print();
+         //res = p1.Minus(p2);
+         //cout << "Res : "; res.Print();
+
+         //res = p1 + p2;//res = p1.operator+(p2);
+         //cout << "Res : "; res.Print();
+
+         //res = p1 - p2;//res = p1.operator-(p2);
+         //cout << "Res : "; res.Print();
+
+         //res = p1 * p2;//res = p1.operator*(p2);
+         //cout << "Res : "; res.Print();
+
+         //res = p1 / p2;//res = p1.operator/(p2);
+         //cout << "Res : "; res.Print();
+
+
+         //cout << "Point 1 : "; p1.Print();
+         //cout << "Point 2 : "; p2.Print();
+         //p1 += p2;
+         //cout << "Point 1 : "; p1.Print();
+         //cout << "Point 2 : "; p2.Print();
+
+         //res = -p1;
+         //cout << "Res : "; res.Print();
+         //cout << "------------------------" << endl;
+         //cout << "Point 1 : "; p1.Print();
+         //cout << "Point 2 : "; p2.Print();
+         //cout << "Res : "; res.Print();
+
+         //res = p1 = p2;
+         //cout << "------------------------" << endl;
+         //cout << "Point 1 : "; p1.Print();
+         //cout << "Point 2 : "; p2.Print();
+         //cout << "Res : "; res.Print();
+
+         //if (p1 > p2)
+         //    cout << "p1 > p2" << endl;
+         //else
+         //    cout << "p1 < p2" << endl;
+
+         //if (p1 < p2)
+         //    cout << "p1 < p2" << endl;
+         //else
+         //    cout << "p1 > p2" << endl;
+
+         //if (p1 == p2)
+         //    cout << "p1 == p2" << endl;
+         //else
+         //    cout << "p1 != p2" << endl;
+
+         //if (p1 != p2)
+         //    cout << "p1 != p2" << endl;
+         //else
+         //    cout << "p1 == p2" << endl;
+//}

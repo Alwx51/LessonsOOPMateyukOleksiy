@@ -10,7 +10,7 @@ public:
     {
         x = y = 0;
     }
-    Point(int value)
+    explicit Point(int value)
     {
         this->x = value;
         this->y = value;
@@ -82,29 +82,45 @@ public:
         //return(this->x * -1, this->y * -1);
         return Point(-x, -y);
     }
+    
+    Point operator--()
+    {
+        --this->x;
+        --this->y;
+        return *this;
+    }
+    Point operator++(int)
+    {
+        this->x++;
+        this->y;
+        return *this;
+    }
+    Point operator--(int)
+    {
+        this->x--;
+        this->y--;
+        return *this;
+    }
 #pragma endregion
 #pragma region Logic operators < > <= >= ! == !=
     bool operator > (const Point& other)
     {
         return ((this->x + this->y) > (other.x + other.y));
     }
-    bool operator < (const Point& other)
+    bool operator < (const Point& other)const
     {
         return ((this->x + this->y) < (other.x + other.y));
     }
-    bool operator >= (const Point& other)
+    bool operator >= (const Point& other)const
     {
         return ((this->x + this->y) >= (other.x + other.y));
     }
-    bool operator <= (const Point & other)
-    {
-        return ((this->x + this->y) <= (other.x + other.y));
-    }
-    bool operator == (const Point & other)
+    
+    bool operator == (const Point & other)const
     {
         return ((this->x == other.x) && (this->y == other.y));
     }
-    bool operator != (const Point & other)
+    bool operator != (const Point & other)const
     {
         //return ((this->x != other.x) && (this->y != other.y));
         return !(*this == other);
@@ -113,6 +129,13 @@ public:
 
 #pragma endregion
    
+    int getX()const { return x; }
+    int getY()const { return y; }
+    void SetX(int newX) { this->x = newX; }
+    void SetY(int newY) { this->y = newY; }
+    friend Point operator++(Point& point);
+    friend ostream& operator << (ostream& out, const Point& point);
+    friend istream& operator >> (istream& in, Point& point);
 };
 
 class Time
@@ -209,10 +232,168 @@ public:
     {
         return !(*this == other);
     }
+
+    
 };
+
+//global function
+
+bool operator <= (const Point& left,const Point& right)
+{
+    return ((left.getX() + left.getY()) <= (right.getX() + right.getY()));
+}
+Point operator++(Point &point)
+{
+    point.x++;
+    point.y++;
+    //point.SetX(point.getX()+1);
+    //point.SetX(point.getX()+1);
+    
+    
+    return point;
+}
+ostream& operator << (ostream& out, const Point& point)
+{
+    out << "X [ " << point.x << "]" << "   Y[" << point.y << "]";
+    return out;
+}
+istream& operator >> (istream& in, Point& point)
+{
+    in >> point.x;
+    in >> point.y;
+    return in;
+}
+
+class Book {
+    string author;
+    string name;
+    string publish;
+    int year;
+    int pages;
+public:
+    Book() {
+        this->author = "No author";
+        this->name = "No name";
+        this->publish = "No publisher";
+        this->year = 0;
+        this->pages = 0;
+    }
+    Book(string author, string name, string publish, int year, int pages) {
+        this->author = author;
+        this->name = name;
+        this->publish = publish;
+        this->year = year;
+        this->pages = pages;
+    }
+    Book(const Book& other) {
+        this->author = other.author;
+        this->name = other.name;
+        this->publish = other.publish;
+        this->year = other.year;
+        this->pages = other.pages;
+    }
+    explicit Book(int year) {
+        this->author = "No author";
+        this->name = "No name";
+        this->publish = "No publisher";
+        this->year = year;
+        this->pages = 0;
+    }
+    void Print()const {
+        cout << "Author: " << author << '\n';
+        cout << "Name: " << name << '\n';
+        cout << "Publish: " << publish << '\n';
+        cout << "Year: " << year << '\n';
+        cout << "Pages: " << pages << '\n';
+    }
+    string getAuthor()const {
+        return author;
+    }
+    string getPublis()const {
+        return publish;
+    }
+    int getYear()const {
+        return year;
+    }
+};
+class Library {
+    Book* books;
+    int countBooks;
+public:
+    Library() {
+        books = nullptr;
+        countBooks = 0;
+    }
+    ~Library() {
+        if (countBooks != 0) delete[] books;
+    }
+    void PrintAll() {
+        for (int i = 0; i < countBooks; i++) {
+            books[i].Print();
+            cout << '\n';
+        }
+    }
+    void PrintAuthor(string author)const {
+        for (int i = 0; i < countBooks; i++)
+            if (books[i].getAuthor() == author) books[i].Print();
+    }
+    void PrintPublish(string publish)const {
+        for (int i = 0; i < countBooks; i++)
+            if (books[i].getPublis() == publish) books[i].Print();
+    }
+    void PrintYear(int year)const {
+        for (int i = 0; i < countBooks; i++)
+            if (books[i].getYear() > year) books[i].Print();
+    }
+    void addBook(Book& book) {
+        Book* temp = new Book[countBooks + 1];
+        for (int i = 0; i < countBooks; i++) {
+            temp[i] = books[i];
+        }
+        temp[countBooks] = book;
+        delete[] books;
+        books = temp;
+        countBooks++;
+    }
+};
+
 
 int main()
 {
+    //lesson2
+    int a = 5, b = 4;
+    Point p1(5, 3);
+    Point p2(7, 8);
+    //ostream cout;
+    cout << p1;
+    p1.Print();
+    ++p1;
+    p1.Print();
+    --p1;
+    p1.Print();
+
+    p1++;
+    p1.Print();
+    p1--;
+    p1.Print();
+    cout << "Enter point x and y: ";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     //practice
     //Time t1(5555);
     Time t1(11, 59, 59);
@@ -232,9 +413,7 @@ int main()
     //int minute = 5555/60%60
     //int sec = 5555%60
 
-    int a = 5, b = 4;
-    Point p1(5, 3);
-    Point p2(7, 8);
+    
     //Point res = p1 + p2;
     //res = p1 - p2;
     //res = p1 * p2;
