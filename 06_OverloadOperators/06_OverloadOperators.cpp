@@ -92,7 +92,7 @@ public:
     Point operator++(int)
     {
         this->x++;
-        this->y;
+        this->y++;
         return *this;
     }
     Point operator--(int)
