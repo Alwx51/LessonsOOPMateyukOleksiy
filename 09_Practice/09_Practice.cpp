@@ -1,0 +1,23 @@
+
+#include "Point.h"
+
+int main()
+{
+    Point point1(13, 45);
+    point1.PrintAll();
+    Point point2(2, 8);
+    point2.PrintAll();
+
+    
+    point1++;
+    point2++;
+    point1.PrintAll();
+    point2.PrintAll();
+    point1--;
+    point2--;
+    point1.PrintAll();
+    point2.PrintAll();
+
+
+
+}

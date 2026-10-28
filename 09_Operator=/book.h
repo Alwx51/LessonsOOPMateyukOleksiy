@@ -5,7 +5,7 @@ using namespace std;
 
 
 enum Genre{ None, Fantasy,Roman,History,Drama, Sci_Fi,Horror, Comedy,Poltitcal,Programming };
-class book
+class Book
 {
 private:
 	string title;
@@ -14,8 +14,8 @@ private:
 	int pages;
 	Genre genre = Comedy;
 public:
-	book();
-	book(string t, int y, string a, int p, Genre g) :title(t), year(y), author(a),
+	Book();
+	Book(string t, int y, string a, int p, Genre g) :title(t), year(y), author(a),
 		pages(0), genre(g) { }
 	void ShowInfo()const;
 
