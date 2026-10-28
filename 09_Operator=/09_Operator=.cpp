@@ -1,0 +1,8 @@
+
+
+
+int main()
+{
+    Book book;
+}
+
