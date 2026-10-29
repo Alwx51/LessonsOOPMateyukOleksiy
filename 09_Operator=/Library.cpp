@@ -52,6 +52,16 @@ Library& Library::operator=(const Library& other)
 	return*this;
 }
 
+Library::Library(Library&& other)
+{
+	this->name = other.name;
+	this->address = other.address;
+	this->countBooks = other.countBooks;
+	this->books = other.books;
+	other.books = nullptr;
+	cout << "Move constructor" << endl;
+}
+
 Library::~Library()
 {
 	if (books != nullptr)
