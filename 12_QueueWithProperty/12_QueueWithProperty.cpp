@@ -1,4 +1,5 @@
 #include <iostream>
+#include <conio.h>
 using namespace std;
 
 //struct Element
@@ -91,9 +92,12 @@ struct Document
     }
 };
 
+
+
+template<typename T>
 class QueueWithProperty
 {
-    Document* documents;
+    T* documents;
     int count;
 public:
     QueueWithProperty() :documents(nullptr), count(0) {}
@@ -104,15 +108,16 @@ public:
             delete[]documents;
         }
     }
-    void Enqueue(Document el)
+    void Enqueue(T el)
     {
         int index = 0;
         while (index < count && documents[index].priority < el.priority)index++;
-        Document* temp = new Document[count + 1];
+        T* temp = new T[count + 1];
         for (int i = 0; i < count; i++)
         {
             temp[i] = documents[i];
-        }temp[index] = el;
+        }
+        temp[index] = el;
         for (int i = index; i < count; i++)
         {
             temp[i + 1] = documents[i];
@@ -128,12 +133,12 @@ public:
     {
         return count == 0;
     }
-    Document Dequeue()
+    T Dequeue()
     {
         if (!isEmpty())
         {
-            Document first = documents[0];
-            for (int i = 0; i < count; i++)
+            T first = documents[0];
+            for (int i = 0; i < count-1; i++)
             {
                 documents[i] = documents[i + 1];
             }
@@ -155,39 +160,57 @@ public:
     int main()
     {
         //practice
-        QueueWithProperty q;
+        QueueWithProperty<Document> q;
         int key;
         string doc;
         int priority;
-        cout << "----------------- MENU ---------------------" << endl;
-        cout << "1-add doc to print" << endl;
-        cout << "2-print all docs" << endl;
-        cout << "3-exit: " << endl;
-        cin >> key;
-        while (key!=0)
+        bool running = true;
+        while (running)
         {
+            system("cls");
+            
+            cout << "----------------- MENU ---------------------" << endl;
+            cout << "1-add doc to print" << endl;
+            cout << "2-print all docs" << endl;
+            cout << "3-exit: " << endl;
+            cin >> key;
+            
             switch (key)
             {
             case 1:
+                system("cls");
                 cout << "Enter doc: "; cin >> doc;
 
                 cout << "Enter priority(1-guess,2-administrator,3-manager,4-director): "; cin >> priority;
                 q.Enqueue(Document{ doc,priority });
+                cout << "Press any key to continue...";
+                _getch();
                 break;
             case 2:
+                system("cls");
                 while (!q.isEmpty())
                 {
                     cout << "Delete element: ";
-                    q.Dequeue().Print();
+                    Document d = q.Dequeue();
+                    d.Print();
                     cout << endl;
                 }
+                cout << "Press any key to continue...";
+                _getch();
+                break;
             case 3:
+                system("cls");
                 cout << "exit" << endl;
+                running = false;
                 break;
             default:
                 break;
             }
+            
+            
         }
+        
+        
             
         
         
