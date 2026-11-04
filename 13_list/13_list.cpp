@@ -86,8 +86,9 @@ public:
     }
     void DeleteFromHead()
     {
-        current = head;
-        head = current.next;
+        if (head == nullptr)return;
+        Node* current = head;
+        head = current->next;
         delete current;
     }
 };
@@ -96,37 +97,72 @@ class Point
 {
     int x;
     int y;
+public:
+    Point()
+    {
+        x = 0;
+        y = 0;
+    }
+    Point(int x,int y)
+    {
+        this->x = x;
+        this->y = y;
+    }
+    void printCoord()
+    {
+        cout << "X = " << x << endl;
+        cout << "Y= " << y << endl;
+    }
+    friend ostream& operator<<(ostream& out, const Point& p)
+    {
+        out << "(" << p.x << ", " << p.y << ")";
+        return out;
+    }
 };
 class Vector
 {
     List<Point> points;
     int size;
+public:
+    Vector():size(0){}
     void AddPointToTail(Point p)
     {
-        points.AddToHead(p);
+        points.AddToTail(p);
+        size++;
     }
     void AddPointToHead(Point p)
     {
-        points.AddToTail(p);
+        points.AddToHead(p);
+        size++;
     }
     void DeletePointFromHead()
     {
-        points.DeleteFromHead(p);
+        if (size == 0)
+        {
+            return;
+        }
+        points.DeleteFromHead();
+        size--;
     }
     void DeletePointFromTail()
     {
-        points.DeleteFromTail(p);
+        points.DeleteFromTail();
+        size--;
+    }
+    void Print()
+    {
+        points.Print();
     }
 };
 
 int main()
 {
-    List l;
+    List<int> l;
     /*for (int i = 0; i < 10; i++)
     {
         l.AddToHead(i);
     }*/
-    l.Print();
+    
     l.AddToTail(100);
     l.AddToTail(200);
     l.AddToTail(300);
@@ -136,7 +172,12 @@ int main()
     l.Print();
     l.DeleteFromTail();
     l.Print();
-    
+    l.AddToTail(100);
+    l.AddToTail(200);
+    l.AddToTail(300);
+    l.Print();
+    l.DeleteFromHead();
+    l.Print();
 
 
 
