@@ -115,6 +115,36 @@ public:
         
 
     }
+    void DeleteByIndex(int index)
+    {
+        if (isEmpty())return;
+        if (index < 0)return;
+        Node* current = head;
+        
+        if (index == 0)
+        {
+            DeleteFromHead();
+            return;
+        }
+        
+        for (int i = 0; i < index; i++)
+        {
+            if (current != nullptr)
+            {
+                current = current->next;
+            }
+            else
+                return;
+        }
+        if(current == tail)
+        {
+            DeleteFromTail();
+            return;
+        }                                       
+        current->prev->next = current->next;
+        current->next->prev = current->prev;
+        delete current;
+    }
 };
 struct Vagon
 {
@@ -168,7 +198,12 @@ int main()
     l.Print();
     l.DeleteFromTail();
     l.Print();
-
-    
-
+    l.addToTail(100);
+    l.addToTail(200);
+    l.addToTail(300);
+    l.Print();
+    l.DeleteFromHead();
+    l.Print();
+    l.DeleteByIndex(4);
+    l.Print();
 }
