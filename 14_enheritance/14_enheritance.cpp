@@ -142,11 +142,171 @@ public:
     }
 };
 
+class Passport
+{
+    string country;
+    string fullName;
+    int birthdate;
+    string gender;
+    int number;
+    int date_of_issue;
+    int expiration_date;
+#pragma region validator
+    int validateYear(int year)
+    {
+        if (year > 1000 && year <= 9999)
+        {
+            return year;
+        }
+        else
+        {
+            cout << "Error invalid number [" << year << "]" << endl;
+            return 0;
+        }
+    }
+    int validateBirthdate(int date)
+    {
+        if (date >= 10000000 && date <= 99999999)
+        {
+            return date;
+        }
+        else
+        {
+            cout << "Error invalid number [" << date << "]" << endl;
+            return 0;
+        }
+    }
+    string validateGender(string gender)
+    {
+        if (gender == "female"||gender == "male")
+        {
+            return gender;
+        }
+        else
+        {
+            cout << "Error invalid gender [" << gender << "]" << endl;
+            return "error";
+        }
+    }
+#pragma endregion
+public:
+#pragma region constructors
+    Passport():country("unknown"),fullName("no full name"),birthdate(00000000),gender("unknown"),number(0),date_of_issue(0000), expiration_date(0000){}
+    Passport(string c, string f,int b,string g,int n,int d,int e):country(c), fullName(f), gender(g), number(n)
+    {
+        date_of_issue = validateYear(d);
+        expiration_date = validateYear(e);
+        birthdate = validateBirthdate(b);
+        gender = validateGender(g);
+    }
+#pragma endregion
+    void print()
+    {
+        cout << "Country: " << country << endl;
+        cout << "Full name: " << fullName << endl;
+        cout << "birthdate: " << birthdate << endl;
+        cout << "Gender: " << gender << endl;
+        cout << "Number: " << number << endl;
+        cout << "Date of issue: " << date_of_issue << endl;
+        cout << "Expiration data: " << expiration_date << endl;
+    }
+};
+
+class ForeignPassport:public Passport
+{
+    int passportNum;
+    static const int max_countrys = 100;
+    string countrys[max_countrys];
+    int count_of_country;
+public:
+#pragma region constructors2
+    ForeignPassport() :passportNum(0),count_of_country(0), Passport()
+    {
+        addCountry("Poland");
+        addCountry("Germany");
+        addCountry("USA");
+        addCountry("France");
+        addCountry("Spain");
+    }
+    ForeignPassport(int p, string c, string f, int b, string g, int n, int d, int e):passportNum(p),count_of_country(0),Passport(c,f,b,g,n,d,e)
+    {
+        addCountry("Poland");
+        addCountry("Germany");
+        addCountry("USA");
+        addCountry("France");
+        addCountry("Spain");
+    }
+#pragma endregion
+    void addCountry(const string& country)
+    {
+        if (count_of_country>=max_countrys)
+        {
+            cout << "Limit" << endl;
+        }
+        else
+        {
+            countrys[count_of_country] = country;
+            count_of_country++;
+        }
+    }
+    void printAllCountrys()
+    {
+        cout << "Passport Number:" << passportNum << endl;
+        cout << "----All countrys----" << endl;
+        for (int i = 0; i < count_of_country; i++)
+        {
+            cout << countrys[i] <<":"<< endl;
+        }
+        cout << "----------------------" << endl;
+        cout << "Number of countrys: " << count_of_country << endl;
+    }
+    void printAllData()
+    {
+        cout << "-------All Data-------" << endl;
+        Passport::print();
+        cout << "Passport number: " << passportNum << endl;      
+        printAllCountrys();
+        
+        
+
+    }
+    //перевірка перед подорожю
+    void ValidateCountry(string country)
+    {
+        for (int i = 0; i < count_of_country; i++)
+        {
+            if (countrys[i] == country)
+            {
+                cout << "This country is in the passport" << endl;
+                break;
+            }
+            
+
+        }
+
+        
+
+        
+        
+
+    }
+};
+
 int main()
 {
-    Aspirant aspirant("shos",12, 13,"KN-1", "programmist", "Mateiuk");
+    Aspirant aspirant("Doctor of Philosophy",12, 13,"KN-1", "programmist", "Mateiuk");
+    aspirant.addPages(150);
+    aspirant.addPages(150);
+    aspirant.addPages(150);
+    aspirant.addPages(150);
 
-
+    //task2
+    ForeignPassport passport(13,"Ukraine","Olelsiy Mateiuk Andriovich",13072011,"male",26,3011,1209);
+    passport.printAllCountrys();
+    passport.printAllData();
+    passport.addCountry("Great Britain");
+    passport.printAllCountrys();
+    passport.ValidateCountry("Great Britain");
 
     /*Dragon dragon("zubochist",5,2);
     Dragon dragon1("galda",7,2);
