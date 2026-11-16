@@ -107,14 +107,14 @@ public:
     }
 };
 
-class Rectangle:public Shape
+class Rectangle1:public Shape
 {
     int height;
     int width;
     
 public:
-    Rectangle():height(0),width(0),Shape(){}
-    Rectangle(string n,int h,int w):height(h),width(w),Shape(n){}
+    Rectangle1():height(0),width(0),Shape(){}
+    Rectangle1(string n,int h,int w):height(h),width(w),Shape(n){}
     void Show()const override
     {
         cout << "---------------Rectangle------------------" << endl;
@@ -303,7 +303,7 @@ void TestShape(Shape& shape)
 int main()
 {
 
-    Rectangle rectangle("rectangle", 10, 20);
+    Rectangle1 rectangle("rectangle", 10, 20);
     Circle circle("circle", 4);
     Triangle90 triangle90("triangle90", 4,6);
     Triangle triangle("triangle",9,8);

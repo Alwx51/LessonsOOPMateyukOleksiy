@@ -84,7 +84,7 @@ using namespace std;
 //    }
 //};
 
-class Student
+class Person
 {
 protected:
     int averageMark;
@@ -92,8 +92,8 @@ protected:
     string futureJob;
     string surname;
 public:
-    Student():averageMark(0),group("N-0"),futureJob("dvornik"),surname("no surname"){}
-    Student(int a,string g,string f,string s):averageMark(a), group(g), futureJob(f), surname(s) {}
+    Person():averageMark(0),group("N-0"),futureJob("dvornik"),surname("no surname"){}
+    Person(int a,string g,string f,string s):averageMark(a), group(g), futureJob(f), surname(s) {}
     void print()
     {
         cout << "-Student-" << endl;
@@ -105,18 +105,18 @@ public:
 
 };
 
-class Aspirant:public Student
+class Aspirant:public Person
 {
     string kandedatTheme;
     int countPages;
     int countMaxPages = 500;
 public:
-    Aspirant():kandedatTheme("no theme"),countPages(0),Student(){}
-    Aspirant(string k,int cp, int a, string g, string f, string s):kandedatTheme(k),countPages(cp),Student(a,g,f,s){}
+    Aspirant():kandedatTheme("no theme"),countPages(0),Person(){}
+    Aspirant(string k,int cp, int a, string g, string f, string s):kandedatTheme(k),countPages(cp),Person(a,g,f,s){}
     void print()
     {
         cout << "-Aspirant-" << endl;
-        Student::print();
+        Person::print();
         cout << "Kandedatna theme: " << kandedatTheme << endl;
         cout << "Count pages: " << countPages << endl;
     }

@@ -3,7 +3,7 @@
 #include <fstream>
 using namespace std;
 
-class Student
+class Person
 {
 	string name;
 	int age;
@@ -20,7 +20,7 @@ class Student
 		averageMark = summa / countMarks;
 	}
 public:
-	Student()//methods
+	Person()//methods
 	{
 		cout << "Default constructor" << endl;
 		name = "no name";
@@ -29,7 +29,7 @@ public:
 		countMarks = 0;
 		averageMark = 0;
 	}
-	Student(string name,int age)//methods
+	Person(string name,int age)//methods
 	{
 		cout << "Parametrized constructor" << endl;
 		this->name = name;
@@ -125,7 +125,7 @@ public:
 		cout << "Data read successfully!" << endl;
 	}
 
-	~Student()
+	~Person()
 	{
 		cout << "Destructor" << name<<endl;
 		if (marks != nullptr)
@@ -137,13 +137,13 @@ public:
 
 int main()
 {
-	Student student("Oleksiy", 15);
+	Person student("Oleksiy", 15);
 	student.AddMark(10);
 	student.AddMark(11);
 	student.AddMark(10);
 	student.AddMark(12);
 	student.Save();
-	Student s2;
+	Person s2;
 	s2.Load();
 	s2.Print();
 

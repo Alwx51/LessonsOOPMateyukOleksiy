@@ -23,7 +23,7 @@ public:
     {
         cout << "Name: " << name << endl;
         cout << "Place: " << place << endl;
-        cout << "Weight: " << weight << endl;
+        cout << "Weight: " << weight << endl;     
     }
     virtual void MakeSound() = 0;//pure virtual function
     virtual void Move()

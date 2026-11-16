@@ -64,7 +64,7 @@ void AddGameToPlayer(int goals = 0)
 }
 };
 
-class Student
+class Person
 {
 private:
     string name;
