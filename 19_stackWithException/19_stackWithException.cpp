@@ -129,8 +129,7 @@ int main()
         s.Pop();
         s.Pop();
         s.Pop();
-        s.Pop();
-        
+        s.Pop();       
         s.Peek();
         s.resize();
     }
